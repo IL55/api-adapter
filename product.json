@@ -1,0 +1,179 @@
+{
+  "ErrorMessage": null,
+  "ErrorCode": 0,
+  "ErrorDescription": "NoError",
+  "Data": {
+    "InvoiceText": [
+      {
+        "Text": null,
+        "LanguageCode": "DE"
+      }
+    ],
+    "Manufacturer": "Yytytydtydty",
+    "Id": 643736427647,
+    "Title": [
+      {
+        "Text": "Hochbelastbar Werkzeugbox aus Holz Holzkiste Naturbelassen 60x40x42cm 85 Liter mit Deckel stapelbar Aufbewahrungsbox",
+        "LanguageCode": "DE"
+      }
+    ],
+    "Description": [
+      {
+        "Text": "\n",
+        "LanguageCode": "DE"
+      }
+    ],
+    "ShortDescription": [
+      {
+        "Text": "\n",
+        "LanguageCode": "DE"
+      }
+    ],
+    "BasicAttributes": [
+      {
+        "Text": null,
+        "LanguageCode": "DE"
+      }
+    ],
+    "Images": [
+      {
+        "Url": "url/bk60-40-30.jpg",
+        "Id": 466317849,
+        "ThumbPathExt": null,
+        "ThumbUrl": null,
+        "Position": 2,
+        "IsDefault": false,
+        "ArticleId": 643736427647
+      },
+      {
+        "Url": "url/bk-604032-1.jpg",
+        "Id": 466317850,
+        "ThumbPathExt": "tryteytry-3cdf-4c8e-b22a-06fb6fc5df83/12868145/100/466317850.png",
+        "ThumbUrl": "url/100/466317850.png",
+        "Position": 3,
+        "IsDefault": false,
+        "ArticleId": 643736427647
+      },
+      {
+        "Url": "url/bk-604032-2.jpg",
+        "Id": 466317851,
+        "ThumbPathExt": null,
+        "ThumbUrl": null,
+        "Position": 4,
+        "IsDefault": false,
+        "ArticleId": 643736427647
+      },
+      {
+        "Url": "url/I/41wB6Ijko4L.jpg",
+        "Id": 437681882,
+        "ThumbPathExt": "tryteytry-3cdf-4c8e-b22a-06fb6fc5df83/643736427647/100/437681882.png",
+        "ThumbUrl": "url/tryteytry-3cdf-4c8e-b22a-06fb6fc5df83/643736427647/100/437681882.png",
+        "Position": 1,
+        "IsDefault": true,
+        "ArticleId": 643736427647
+      }
+    ],
+    "VatIndex": 1,
+    "Price": 39.8,
+    "CostPrice": null,
+    "Vat1Rate": 21,
+    "Vat2Rate": 15,
+    "StockDesired": null,
+    "StockCurrent": 8,
+    "StockWarning": null,
+    "SKU": "BU-74673264327",
+    "EAN": null,
+    "Materials": [
+      {
+        "Text": null,
+        "LanguageCode": "DE"
+      }
+    ],
+    "Tags": [
+      {
+        "Text": null,
+        "LanguageCode": "DE"
+      }
+    ],
+    "Sources": [
+      {
+        "Id": 8006044,
+        "Source": "amazon",
+        "SourceId": "7647324623746237",
+        "ApiAccountName": "gsfhgsdhfgsde - DE Market",
+        "ApiAccountId": 29586,
+        "ExportFactor": null,
+        "StockSyncInactive": false,
+        "StockSyncMin": null,
+        "StockSyncMax": null,
+        "UnitsPerItem": 1,
+        "Custom": {
+          "CustomSKU": "BU-74673264327"
+        }
+      },
+      {
+        "Id": 13738526,
+        "Source": "shopware",
+        "SourceId": "259",
+        "ApiAccountName": "alte shopware",
+        "ApiAccountId": 29607,
+        "ExportFactor": null,
+        "StockSyncInactive": false,
+        "StockSyncMin": null,
+        "StockSyncMax": null,
+        "UnitsPerItem": 1,
+        "Custom": null
+      },
+      {
+        "Id": 31123292,
+        "Source": "presta",
+        "SourceId": "3",
+        "ApiAccountName": "woodboxstore",
+        "ApiAccountId": 91975,
+        "ExportFactor": null,
+        "StockSyncInactive": true,
+        "StockSyncMin": null,
+        "StockSyncMax": null,
+        "UnitsPerItem": null,
+        "Custom": null
+      }
+    ],
+    "Weight": null,
+    "WeightNet": null,
+    "LowStock": false,
+    "StockCode": "1632-73686s",
+    "StockReduceItemsPerSale": 1,
+    "Stocks": [],
+    "Category1": {
+      "Name": "Kisten",
+      "Id": 12571
+    },
+    "Category2": null,
+    "Category3": null,
+    "Type": 2,
+    "Unit": null,
+    "UnitsPerItem": null,
+    "SoldAmount": 298,
+    "SoldSumGross": 13279.94,
+    "SoldSumNet": 11005.48,
+    "SoldSumNetLast30Days": 179.83,
+    "SoldSumGrossLast30Days": 214,
+    "SoldAmountLast30Days": 4,
+    "ShippingProductId": null,
+    "IsDigital": false,
+    "IsCustomizable": false,
+    "DeliveryTime": 1,
+    "Recipient": null,
+    "Occasion": null,
+    "CountryOfOrigin": null,
+    "ExportDescription": null,
+    "ExportDescriptionMultiLanguage": [],
+    "TaricNumber": null,
+    "Condition": null,
+    "WidthCm": null,
+    "LengthCm": null,
+    "HeightCm": null,
+    "BillOfMaterial": [],
+    "CustomFields": []
+  }
+}

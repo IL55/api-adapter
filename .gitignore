@@ -3,6 +3,4 @@ task/
 secrets.py
 venv/
 __pycache__
-order.json
-product.json
 .DS_Store
