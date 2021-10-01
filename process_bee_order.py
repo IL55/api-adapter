@@ -1,5 +1,6 @@
 import logging
 from bee_api import get_product
+from config import BeeConfig
 
 def process_order(bee_order_id: str, json: dict):
   """
@@ -16,7 +17,7 @@ def process_order(bee_order_id: str, json: dict):
   address = {}
 
   # get order id "Data.Id" - "Data.OrderNumber"
-  order['orderNumber'] = '{0}-{1}'.format(json_data.get('Id', ''),
+  order['orderNumber'] = '{0}-{1}'.format(str(BeeConfig.ps_id),
                                     json_data.get('OrderNumber', ''))
 
   if (not order['orderNumber']):
@@ -124,9 +125,9 @@ def process_order(bee_order_id: str, json: dict):
     return None
 
   order['address'] = address
+  order['products'] = products
   ps = {
-    'order': order,
-    'products': products
+    'order': order
   }
 
   logging.info(f'process_order {bee_order_id} end, {ps}')

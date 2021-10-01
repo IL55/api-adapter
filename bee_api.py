@@ -1,6 +1,6 @@
 import logging
 from config import BeeConfig
-from network import get_request, post_request
+from network import get_request, put_request
 
 def get_order(bee_order_id: str):
   """
@@ -34,7 +34,7 @@ def get_product(bee_product_id: str):
   return get_request(url, BeeConfig.headers)
 
 
-def set_order_state(bee_order_id: str, order_state: str, shiping_id: str):
+def set_order_state(bee_order_id: str, order_state: int, shiping_id: str=None):
   """
   Set order data from bee API
   Returns json data
@@ -45,7 +45,11 @@ def set_order_state(bee_order_id: str, order_state: str, shiping_id: str):
     logging.error(f'Empty bee order id is {bee_order_id}')
     return None
 
-  url = '{0}{1}'.format(BeeConfig.orders_url, bee_order_id)
+  url = '{0}{1}{2}'.format(
+      BeeConfig.orders_url, bee_order_id, BeeConfig.order_state_url)
 
-  # TODO send data in bilbee format
-  return post_request(url, BeeConfig.headers, {})
+  data = {
+    "NewStateId": order_state
+  }
+
+  return put_request(url, BeeConfig.headers, data)

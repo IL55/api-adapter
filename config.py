@@ -14,7 +14,8 @@ class BeeConfig:
     base_url = "https://app.billbee.io/api/v1"
     orders_url = base_url + "/orders/"
     products_url = base_url + "/products/"
-
+    ps_id = 1632
+    order_state_url = "/orderstate"
 
     headers = {
         "Content-Type": "application/json",

@@ -36,9 +36,39 @@ def post_request(url: str, headers: dict, json_data: dict):
 
   logging.info(f'Response status code {response.status_code}')
   if (response.status_code != 200):
-    logging.error(f'Cannot get {url} response is {response}')
+    logging.error(f'Cannot post {url} response is {response}')
     return None
 
-  json = response.json()
+  try:
+    json = response.json()
+  except:
+    logging.debug(f'No json in POST response')
+    json = response.status_code
+
+  logging.debug(f'Json is {json}')
+  return json
+
+
+def put_request(url: str, headers: dict, json_data: dict):
+  logging.info(f'Posting {url} ')
+  response = None
+  try:
+    response = requests.put(
+        url, json=json_data, headers=headers, timeout=default_timeout)
+  except:
+    logging.error(f'Timeout for {url} exception is {sys.exc_info()}')
+    return None
+
+  logging.info(f'Response status code {response.status_code}')
+  if (response.status_code != 200):
+    logging.error(f'Cannot put {url} response is {response}')
+    return None
+
+  try:
+    json = response.json()
+  except:
+    logging.debug(f'No json in PUT response')
+    json = response.status_code
+
   logging.debug(f'Json is {json}')
   return json
