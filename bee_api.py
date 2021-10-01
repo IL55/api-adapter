@@ -47,4 +47,5 @@ def set_order_state(bee_order_id: str, order_state: str, shiping_id: str):
 
   url = '{0}{1}'.format(BeeConfig.orders_url, bee_order_id)
 
-  return post_request(url, BeeConfig.headers, )
+  # TODO send data in bilbee format
+  return post_request(url, BeeConfig.headers, {})

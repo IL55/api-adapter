@@ -9,6 +9,7 @@ logging.basicConfig(level=logging_level)
 logging.info('Start script')
 
 #TODO get parameter for args
+# test id is 166651740
 # input parameter
 bee_order_id = '164658970'
 
