@@ -4,3 +4,5 @@ secrets.py
 venv/
 __pycache__
 .DS_Store
+build
+build.zip

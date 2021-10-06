@@ -16,6 +16,7 @@ class BeeConfig:
     products_url = base_url + "/products/"
     ps_id = 1632
     order_state_url = "/orderstate"
+    order_state_shipping = 4
 
     headers = {
         "Content-Type": "application/json",
