@@ -25,8 +25,16 @@ i.e. copy file secrets.py.example to secrets.py and define all credentials
 ## Install dependent libs
 `pip install -r requirements.txt`
 
-# Run application
-`python3 main.py`
+# Run application from console
+`python console_function.py 166651740`
+
+# Deploy to AWS lambda
+
+## Create zip
+`deploy.zsh`
+
+## Upload zip to lambda
+https://aws.amazon.com/lambda/
 
 
 
