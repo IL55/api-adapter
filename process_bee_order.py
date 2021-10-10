@@ -17,8 +17,7 @@ def process_order(bee_order_id: str, json: dict):
   address = {}
 
   # get order id "Data.Id" - "Data.OrderNumber"
-  order['orderNumber'] = '{0}-{1}'.format(str(BeeConfig.ps_id),
-                                    json_data.get('OrderNumber', ''))
+  order['orderNumber'] = '{0}-{1}'.format(str(BeeConfig.ps_id), bee_order_id)
 
   if (not order['orderNumber']):
     logging.error(
