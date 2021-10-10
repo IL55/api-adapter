@@ -3,6 +3,7 @@ from config import BeeConfig, logging_level
 from bee_api import get_order, set_order_state
 from process_bee_order import process_order
 from ps_api import add_order
+from version import API_VERSION
 
 logging.basicConfig(level=logging_level)
 
@@ -15,6 +16,7 @@ def create_ps_order(bee_order_id: str):
     message = f'Get order {bee_order_id} failed'
     logging.info(message)
     return {
+      'version': API_VERSION,
       'response-code': -1,
       'message': message
     }
@@ -25,6 +27,7 @@ def create_ps_order(bee_order_id: str):
     message = f'Process order {bee_order_id} failed'
     logging.info(message)
     return {
+        'version': API_VERSION,
         'response-code': -2,
         'message': message
     }
@@ -37,6 +40,7 @@ def create_ps_order(bee_order_id: str):
     message = f'Create PS for order {bee_order_id} failed, api error'
     logging.info(message)
     return {
+        'version': API_VERSION,
         'response-code': -3,
         'message': message
     }
@@ -45,6 +49,7 @@ def create_ps_order(bee_order_id: str):
     message = f'Create PS for order {bee_order_id} logic error {add_order_result["statusInfo"]}'
     logging.info(message)
     return {
+        'version': API_VERSION,
         'response-code': -4,
         'message': message
     }
@@ -57,12 +62,14 @@ def create_ps_order(bee_order_id: str):
     message = f'Cannot set status for order {bee_order_id} api error'
     logging.info(message)
     return {
+        'version': API_VERSION,
         'response-code': -5,
         'message': message
     }
 
   message = f'End order {bee_order_id} SUCCESS'
   return {
+      'version': API_VERSION,
       'response-code': 0,
       'message': message
   }
