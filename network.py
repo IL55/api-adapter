@@ -24,6 +24,26 @@ def get_request(url: str, headers: dict):
   return json
 
 
+def post_html_request(url: str, headers: dict):
+  logging.info(f'Post html {url} ')
+  response = None
+  try:
+    response = requests.post(
+        url, headers=headers, json={}, timeout=default_timeout)
+  except:
+    logging.error(f'Timeout for {url} exception is {sys.exc_info()}')
+    return None
+
+  logging.info(f'Response status code {response.status_code}')
+  if (response.status_code != 200):
+    logging.error(f'Cannot get {url} response is {response}')
+    return None
+
+  logging.info(response.text)
+
+  return response.text
+
+
 def post_request(url: str, headers: dict, json_data: dict):
   logging.info(f'Posting {url} ')
   response = None
@@ -68,6 +88,31 @@ def put_request(url: str, headers: dict, json_data: dict):
     json = response.json()
   except:
     logging.debug(f'No json in PUT response')
+    json = response.status_code
+
+  logging.debug(f'Json is {json}')
+  return json
+
+
+def patch_request(url: str, headers: dict, json_data: dict):
+  logging.info(f'Patching {url} ')
+  response = None
+  try:
+    response = requests.patch(
+        url, json=json_data, headers=headers, timeout=default_timeout)
+  except:
+    logging.error(f'Timeout for {url} exception is {sys.exc_info()}')
+    return None
+
+  logging.info(f'Response status code {response.status_code}')
+  if (response.status_code != 200):
+    logging.error(f'Cannot patch {url} response is {response}')
+    return None
+
+  try:
+    json = response.json()
+  except:
+    logging.debug(f'No json in PATCH response')
     json = response.status_code
 
   logging.debug(f'Json is {json}')

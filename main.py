@@ -1,8 +1,8 @@
 import logging
 from config import BeeConfig, logging_level
-from bee_api import get_order, set_order_state
+from bee_api import get_order, set_order_state, set_order_tracking
 from process_bee_order import process_order
-from ps_api import add_order
+from ps_api import add_order, get_tracking_info
 from version import API_VERSION
 
 logging.basicConfig(level=logging_level)
@@ -73,3 +73,34 @@ def create_ps_order(bee_order_id: str):
       'response-code': 0,
       'message': message
   }
+
+def get_tracking(ps_order_id: str):
+  logging.info(f'Get tracking {ps_order_id} data')
+  tracking_data = get_tracking_info(ps_order_id)
+  if (not tracking_data):
+    message = f'Get tracking info {ps_order_id} failed'
+    logging.info(message)
+    return {
+        'version': API_VERSION,
+        'response-code': -1,
+        'message': message
+    }
+
+  if (tracking_data["message"]):
+    return {
+        'version': API_VERSION,
+        'response-code': -2,
+        'message': tracking_data["message"]
+    }
+
+  logging.info(f'Received track data from PS {tracking_data}')
+
+  response = set_order_tracking(ps_order_id, tracking_data)
+  logging.info(response)
+
+  return {
+      'version': API_VERSION,
+      'response-code': 0,
+      'message': "OK"
+  }
+

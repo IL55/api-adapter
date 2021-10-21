@@ -1,5 +1,6 @@
 import logging
 import secrets
+import base64
 
 # log level for logger could be INFO/ERROR/DEBUG
 logging_level = logging.INFO
@@ -18,6 +19,8 @@ class BeeConfig:
     order_state_url = "/orderstate"
     order_state_shipping = 4
 
+    shipment = "/shipment"
+
     headers = {
         "Content-Type": "application/json",
         "X-Billbee-Api-Key": api_key,
@@ -25,19 +28,27 @@ class BeeConfig:
     }
 
 class PsConfig:
-  api_key = secrets.PS_API_KEY
-  user_id = secrets.PS_USER_ID
-  base_url = "https://api.fulfillmenton.com"
-  add_order_url = base_url + "/add-fulfillment-order"
+    api_key = secrets.PS_API_KEY
+    user_id = secrets.PS_USER_ID
+    base_url = "https://api.fulfillmenton.com"
+    add_order_url = base_url + "/add-fulfillment-order"
+    get_tracking_url = "https://www.postabezhranic.cz/api/get-package-info?id="
+    get_tracking_url_html = "https://tracking.postabezhranic.cz/detail-"
 
-  headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + api_key
-  }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + api_key
+    }
 
-  data = {
-      "userId": user_id,
-      "data": {
-          "isLive": True
-      }
-  }
+    basicAuth = bytes('{0}:{1}'.format(user_id, api_key), 'utf8')
+
+    headersBasic = {
+        "Authorization": "Basic " + base64.b64encode(basicAuth).decode("ascii")
+    }
+
+    data = {
+        "userId": user_id,
+        "data": {
+            "isLive": True
+        }
+    }

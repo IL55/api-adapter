@@ -1,6 +1,6 @@
 import logging
 from config import BeeConfig
-from network import get_request, put_request
+from network import get_request, put_request, patch_request
 
 def get_order(bee_order_id: str):
   """
@@ -34,7 +34,7 @@ def get_product(bee_product_id: str):
   return get_request(url, BeeConfig.headers)
 
 
-def set_order_state(bee_order_id: str, order_state: int, shiping_id: str=None):
+def set_order_state(bee_order_id: str, order_state: int):
   """
   Set order data from bee API
   Returns json data
@@ -53,3 +53,39 @@ def set_order_state(bee_order_id: str, order_state: int, shiping_id: str=None):
   }
 
   return put_request(url, BeeConfig.headers, data)
+
+def set_order_tracking(ps_order_id: str, tracking_data: dict):
+  """
+  Set tracking data from bee API
+  Returns json data
+  """
+  logging.info(f'Set order state for ps order id is {ps_order_id}')
+
+  try:
+    bee_order_id = ps_order_id.split('-')[1]
+  except:
+    bee_order_id = None
+
+  if (not bee_order_id):
+    logging.error(f'Empty bee order id is {bee_order_id}')
+    return None
+
+  url = '{0}{1}'.format(BeeConfig.orders_url, bee_order_id)
+
+  data = {
+    "ShippingIds": [
+      {
+        "BillbeeId": 0,
+        "ShippingId": tracking_data["ShippingId"],
+        "Shipper": tracking_data["Shipper"],
+        "Created": "2021-10-19T20:42:49.307Z",
+        "TrackingUrl": tracking_data["TrackingUrl"],
+        "ShippingProviderId": 0,
+        "ShippingProviderProductId": 0,
+        "ShippingCarrier": 0,
+        "ShipmentType": 0
+      }
+    ]
+  }
+
+  return patch_request(url, BeeConfig.headers, data)
