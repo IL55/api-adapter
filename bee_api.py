@@ -1,6 +1,6 @@
 import logging
 from config import BeeConfig
-from network import get_request, put_request, patch_request
+from network import get_request, put_request, post_request
 
 def get_order(bee_order_id: str):
   """
@@ -61,31 +61,30 @@ def set_order_tracking(ps_order_id: str, tracking_data: dict):
   """
   logging.info(f'Set order state for ps order id is {ps_order_id}')
 
-  try:
-    bee_order_id = ps_order_id.split('-')[1]
-  except:
-    bee_order_id = None
-
-  if (not bee_order_id):
-    logging.error(f'Empty bee order id is {bee_order_id}')
-    return None
-
-  url = '{0}{1}'.format(BeeConfig.orders_url, bee_order_id)
-
+  url = '{0}{1}{3}'.format(BeeConfig.orders_url, bee_order_id, BeeConfig.shipment)
+  """
   data = {
-    "ShippingIds": [
-      {
-        "BillbeeId": 0,
-        "ShippingId": tracking_data["ShippingId"],
-        "Shipper": tracking_data["Shipper"],
-        "Created": "2021-10-19T20:42:49.307Z",
-        "TrackingUrl": tracking_data["TrackingUrl"],
-        "ShippingProviderId": 0,
-        "ShippingProviderProductId": 0,
-        "ShippingCarrier": 0,
-        "ShipmentType": 0
-      }
-    ]
+      "InvoiceNumber": tracking_data["ShippingId"],
+      "SellerComments": tracking_data["TrackingUrl"]
+  }
+  """
+  data = {
+    "ShippingId": tracking_data["ShippingId"],
+    "Comment": tracking_data["TrackingUrl"],
+    "ShippingProviderId": 8008,
+    "ShippingProviderProductId": 67905,
+    "ShippingCarrier": 4,
+    "ShipmentType": 0
   }
 
-  return patch_request(url, BeeConfig.headers, data)
+  response = post_request(url, BeeConfig.headers, data)
+  if (not response):
+    message = f'Cannot add new shipping {bee_order_id}'
+    logging.error(message)
+    return {
+        "message": message
+    }
+
+  return {
+    "message": None
+  }

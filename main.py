@@ -55,7 +55,7 @@ def create_ps_order(bee_order_id: str):
     }
 
   set_order_state_result = set_order_state(
-      bee_order_id, BeeConfig.order_state_shipping)
+      bee_order_id, BeeConfig.order_state_preparing)
   logging.info(
       f'New state for order {bee_order_id} defined, result {set_order_state_result}')
   if (not set_order_state_result):
@@ -74,6 +74,7 @@ def create_ps_order(bee_order_id: str):
       'message': message
   }
 
+
 def get_tracking(ps_order_id: str):
   logging.info(f'Get tracking {ps_order_id} data')
   tracking_data = get_tracking_info(ps_order_id)
@@ -82,21 +83,53 @@ def get_tracking(ps_order_id: str):
     logging.info(message)
     return {
         'version': API_VERSION,
-        'response-code': -1,
+        'response-code': -11,
         'message': message
     }
 
   if (tracking_data["message"]):
     return {
         'version': API_VERSION,
-        'response-code': -2,
+        'response-code': -12,
         'message': tracking_data["message"]
     }
 
   logging.info(f'Received track data from PS {tracking_data}')
 
-  response = set_order_tracking(ps_order_id, tracking_data)
-  logging.info(response)
+  try:
+    bee_order_id = ps_order_id.split('-')[1]
+  except:
+    bee_order_id = None
+
+  if (not bee_order_id):
+    message = f'Empty bee order id is {bee_order_id}'
+    logging.error(message)
+    return {
+        'version': API_VERSION,
+        'response-code': -13,
+        'message': tracking_data["message"]
+    }
+
+  tracking_response = set_order_tracking(bee_order_id, tracking_data)
+  if (tracking_response["message"]):
+    return {
+        'version': API_VERSION,
+        'response-code': -14,
+        'message': tracking_response["message"]
+    }
+
+  set_order_state_result = set_order_state(
+      bee_order_id, BeeConfig.order_state_shipping)
+  logging.info(
+      f'New state for order {bee_order_id} defined, result {set_order_state_result}')
+  if (not set_order_state_result):
+    message = f'Cannot set status for order {bee_order_id} api error'
+    logging.info(message)
+    return {
+        'version': API_VERSION,
+        'response-code': -15,
+        'message': message
+    }
 
   return {
       'version': API_VERSION,

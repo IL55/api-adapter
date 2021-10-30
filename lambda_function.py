@@ -1,6 +1,6 @@
 import logging
 import json
-from main import create_ps_order
+from main import create_ps_order, get_tracking
 
 def lambda_handler(event, context):
     logging.info('Start script from lambda')
@@ -10,13 +10,24 @@ def lambda_handler(event, context):
         id=None
 
     try:
-      response = create_ps_order(id)
+        action = event["queryStringParameters"]['action']
     except:
-      response = None
+        action = None
 
+    if (action == "get_tracking"):
+        try:
+            response = get_tracking(id)
+        except:
+            response = None
+    else:
+        try:
+            response = create_ps_order(id)
+        except:
+            response = None
 
     body = {
         'id': id,
+        'action': action,
         'response': response
     }
 

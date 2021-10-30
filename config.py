@@ -18,6 +18,7 @@ class BeeConfig:
     ps_id = 1632
     order_state_url = "/orderstate"
     order_state_shipping = 4
+    order_state_preparing = 16
 
     shipment = "/shipment"
 
