@@ -75,7 +75,8 @@ def create_ps_order(bee_order_id: str):
   }
 
 
-def get_tracking(ps_order_id: str):
+def get_tracking(bee_order_id: str):
+  ps_order_id = '{0}-{1}'.format(str(BeeConfig.ps_id), bee_order_id)
   logging.info(f'Get tracking {ps_order_id} data')
   tracking_data = get_tracking_info(ps_order_id)
   if (not tracking_data):
@@ -95,20 +96,6 @@ def get_tracking(ps_order_id: str):
     }
 
   logging.info(f'Received track data from PS {tracking_data}')
-
-  try:
-    bee_order_id = ps_order_id.split('-')[1]
-  except:
-    bee_order_id = None
-
-  if (not bee_order_id):
-    message = f'Empty bee order id is {bee_order_id}'
-    logging.error(message)
-    return {
-        'version': API_VERSION,
-        'response-code': -13,
-        'message': tracking_data["message"]
-    }
 
   tracking_response = set_order_tracking(bee_order_id, tracking_data)
   if (tracking_response["message"]):

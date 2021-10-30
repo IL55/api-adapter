@@ -14,7 +14,7 @@ logging.info(
 if (len(sys.argv) < 3):
   logging.info('Wrong number of argument, example:')
   logging.info('python console_function.py create_ps_order 166651740')
-  logging.info('python console_function.py get_tracking psUserId-beeOrderId')
+  logging.info('python console_function.py get_tracking 166651740')
   exit()
 
 try:

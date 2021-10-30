@@ -26,7 +26,7 @@ i.e. copy file secrets.py.example to secrets.py and define all credentials
 `pip install -r requirements.txt`
 
 # Run application from console
-`python console_function.py 166651740`
+`python console_function.py create_ps_order 166651740`
 
 # Deploy to AWS lambda
 
