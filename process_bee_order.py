@@ -2,6 +2,9 @@ import logging
 from bee_api import get_product
 from config import BeeConfig
 
+def has_numbers(inputString: str):
+  return any(char.isdigit() for char in inputString)
+
 def process_order(bee_order_id: str, json: dict):
   """
   Process json data for specific bee order
@@ -42,6 +45,11 @@ def process_order(bee_order_id: str, json: dict):
   else:
     logging.error(
         f'Street, HouseNumber for order {bee_order_id} should be defined json={json_data}')
+    return None
+
+  if (not has_numbers(street)):
+    message = f'Street, HouseNumber for order {bee_order_id} should contain (at least) one digit json={json_data}'
+    logging.error(message)
     return None
 
   zip = shipping_address.get('Zip', '')
