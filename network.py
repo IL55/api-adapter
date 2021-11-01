@@ -35,7 +35,8 @@ def post_html_request(url: str, headers: dict):
     return None
 
   logging.info(f'Response status code {response.status_code}')
-  if (response.status_code != 200):
+  if (response.status_code != 200 or
+      not response.text):
     logging.error(f'Cannot get {url} response is {response}')
     return None
 

@@ -35,9 +35,12 @@ def parse_tracking_info_xml(xmlstring: str):
     if (not tree):
         return result
 
-    result["ShippingId"] = tree.find("package_tracking_number").text
-    result["TrackingUrl"] = tree.find("package_tracking_link").text
-    result["Shipper"] = tree.find("package_shipping_company").text
+    try:
+        result["ShippingId"] = tree.find("package_tracking_number").text
+        result["TrackingUrl"] = tree.find("package_tracking_link").text
+        result["Shipper"] = tree.find("package_shipping_company").text
+    except:
+        result["message"] = "Cannot find some fields in xml"
 
     return result
 

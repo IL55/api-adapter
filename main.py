@@ -80,11 +80,20 @@ def get_tracking(bee_order_id: str):
   logging.info(f'Get tracking {ps_order_id} data')
   tracking_data = get_tracking_info(ps_order_id)
   if (not tracking_data):
-    message = f'Get tracking info {ps_order_id} failed'
+    message = f'Get tracking info from ps with ps order id {ps_order_id} failed'
     logging.info(message)
     return {
         'version': API_VERSION,
         'response-code': -11,
+        'message': message
+    }
+
+  if (not tracking_data["ShippingId"]):
+    message = f'No shipping id for {ps_order_id}'
+    logging.info(message)
+    return {
+        'version': API_VERSION,
+        'response-code': 0,
         'message': message
     }
 

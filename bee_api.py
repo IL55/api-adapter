@@ -54,14 +54,15 @@ def set_order_state(bee_order_id: str, order_state: int):
 
   return put_request(url, BeeConfig.headers, data)
 
-def set_order_tracking(ps_order_id: str, tracking_data: dict):
+
+def set_order_tracking(bee_order_id: str, tracking_data: dict):
   """
   Set tracking data from bee API
   Returns json data
   """
-  logging.info(f'Set order state for ps order id is {ps_order_id}')
+  logging.info(f'Set order state for ps order id is {bee_order_id}')
 
-  url = '{0}{1}{3}'.format(BeeConfig.orders_url, bee_order_id, BeeConfig.shipment)
+  url = '{0}{1}{2}'.format(BeeConfig.orders_url, bee_order_id, BeeConfig.shipment)
   """
   data = {
       "InvoiceNumber": tracking_data["ShippingId"],
