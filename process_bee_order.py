@@ -83,6 +83,8 @@ def process_order(bee_order_id: str, json: dict):
   phone = shipping_address.get('Phone', '')
   if (phone):
     address['phone'] = phone
+  else:
+    address['phone'] = '+49111111111'
 
   insurance = json_data.get('PaidAmount', '')
   if (insurance):
