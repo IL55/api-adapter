@@ -20,7 +20,6 @@ def get_request(url: str, headers: dict):
     return None
 
   json = response.json()
-  logging.debug(f'Json is {json}')
   return json
 
 
@@ -37,6 +36,26 @@ def post_html_request(url: str, headers: dict):
   logging.info(f'Response status code {response.status_code}')
   if (response.status_code != 200 or
       not response.text):
+    logging.error(f'Cannot get {url} response is {response}')
+    return None
+
+  # logging.info(response.text)
+
+  return response.text
+
+def post_xml_request(url: str, headers: dict, xml_text: str):
+  logging.info(f'Post xml {url} ')
+  response = None
+  try:
+    response = requests.post(
+        url, headers=headers, data=xml_text, timeout=default_timeout)
+  except:
+    logging.error(f'Timeout for {url} exception is {sys.exc_info()}')
+    return None
+
+  logging.info(f'Response status code {response.status_code} {response.content}')
+  if (response.status_code != 200 or
+          not response.text):
     logging.error(f'Cannot get {url} response is {response}')
     return None
 

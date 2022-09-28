@@ -1,6 +1,8 @@
 import logging
 import sys
 from main import create_ps_order, get_tracking
+from makura_api import update_makura_products
+from ppl_api import get_ppl_tracking
 
 logging.info('Start script from console')
 
@@ -15,6 +17,8 @@ if (len(sys.argv) < 3):
   logging.info('Wrong number of argument, example:')
   logging.info('python console_function.py create_ps_order 166651740')
   logging.info('python console_function.py get_tracking 166651740')
+  logging.info('python console_function.py get_ppl_tracking 166651740')
+  logging.info('python console_function.py update_makura_products makura_secret')
   exit()
 
 try:
@@ -30,6 +34,16 @@ except:
 if (action == "get_tracking"):
   try:
     response = get_tracking(id)
+  except:
+    response = None
+elif action == "get_ppl_tracking":
+  try:
+    response = get_ppl_tracking(id)
+  except:
+    response = None
+elif action == "update_makura_products":
+  try:
+    response = update_makura_products()
   except:
     response = None
 else:

@@ -14,7 +14,9 @@ class BeeConfig:
     api_key = secrets.BEE_API_KEY
     base_url = "https://app.billbee.io/api/v1"
     orders_url = base_url + "/orders/"
-    products_url = base_url + "/products/"
+    products_url = base_url + "/products"
+    search_url = base_url + "/search"
+    update_stock_url = products_url + "/updatestockmultiple"
     ps_id = 1632
     order_state_url = "/orderstate"
     order_state_shipping = 4
@@ -53,3 +55,28 @@ class PsConfig:
             "isLive": True
         }
     }
+
+
+class PplConfig:
+    customer_id = secrets.PPL_CUSTOMER_ID
+    username = secrets.PPL_USERNAME
+    password = secrets.PPL_PASSWORD
+    base_url = "https://myapi.ppl.cz/MyAPI.svc"
+    action_url = "http://myapi.ppl.cz/v1/IMyApi2"
+    version_url = action_url + "/Version"
+    login_url = action_url + "/Login"
+    get_packages_url = action_url + "/GetPackages"
+
+    headers = {
+        "Content-Type": "application/xml"
+    }
+
+
+class MakuraConfig:
+    base_url = "https://www.makura.cz"
+    get_products_url = base_url + "/export/dostupnost.xml?hash=418cc1804e76013b2fd360972656faa5"
+
+    headers = {
+        "Content-Type": "application/xml"
+    }
+

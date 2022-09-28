@@ -133,3 +133,61 @@ def get_tracking(bee_order_id: str):
       'message': "OK"
   }
 
+
+def get_ppl_tracking(bee_order_id: str):
+  ppl_order_id = '{0}-{1}'.format(str(BeeConfig.ps_id), bee_order_id)
+  logging.info(f'Get ppl tracking {ppl_order_id} data')
+  tracking_data = get_tracking_info(ppl_order_id)
+  if (not tracking_data):
+    message = f'Get tracking info from ppl with ppl order id {ppl_order_id} failed'
+    logging.info(message)
+    return {
+        'version': API_VERSION,
+        'response-code': -100,
+        'message': message
+    }
+
+  if (not tracking_data["ShippingId"]):
+    message = f'No shipping id for {ppl_order_id}'
+    logging.info(message)
+    return {
+        'version': API_VERSION,
+        'response-code': 0,
+        'message': message
+    }
+
+  if (tracking_data["message"]):
+    return {
+        'version': API_VERSION,
+        'response-code': -101,
+        'message': tracking_data["message"]
+    }
+
+  logging.info(f'Received track data from PS {tracking_data}')
+
+  tracking_response = set_order_tracking(bee_order_id, tracking_data)
+  if (tracking_response["message"]):
+    return {
+        'version': API_VERSION,
+        'response-code': -102,
+        'message': tracking_response["message"]
+    }
+
+  set_order_state_result = set_order_state(
+      bee_order_id, BeeConfig.order_state_shipping)
+  logging.info(
+      f'New state for order {bee_order_id} defined, result {set_order_state_result}')
+  if (not set_order_state_result):
+    message = f'Cannot set status for order {bee_order_id} api error'
+    logging.info(message)
+    return {
+        'version': API_VERSION,
+        'response-code': -103,
+        'message': message
+    }
+
+  return {
+      'version': API_VERSION,
+      'response-code': 0,
+      'message': "OK"
+  }

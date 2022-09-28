@@ -37,4 +37,5 @@ i.e. copy file secrets.py.example to secrets.py and define all credentials
 https://aws.amazon.com/lambda/
 
 
-
+# Unit tests
+`python -m unittest`
