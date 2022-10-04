@@ -29,6 +29,13 @@ xml = """<?xml version="1.0" encoding="utf-8"?>
         <AVAILABILITY>in stock</AVAILABILITY>
         <STOCK_QUANTITY>2</STOCK_QUANTITY>
     </SHOPITEM>
+    <SHOPITEM>
+        <ID>184</ID>
+        <CATALOG_NUMBER>M01-125</CATALOG_NUMBER>
+        <EAN>55454</EAN>
+        <DELIVERY_DATE>0</DELIVERY_DATE>
+        <AVAILABILITY>in stock</AVAILABILITY>
+    </SHOPITEM>
 </SHOP>"""
 
 class Makura_api(unittest.TestCase):
@@ -43,10 +50,13 @@ class Makura_api(unittest.TestCase):
             'count': 0, 'sku': 'M01-080-1', 'state': 'available for order'
         })
         self.assertDictEqual(result["products"][1], {
-            'count': -5, 'sku': 'M01-121', 'state': 'out of stock'
+            'count': 0, 'sku': 'M01-121', 'state': 'out of stock'
         })
         self.assertDictEqual(result["products"][2], {
             'count': 2, 'sku': 'M01-124', 'state': 'in stock'
+        })
+        self.assertDictEqual(result["products"][3], {
+            'count': 100, 'sku': 'M01-125', 'state': 'in stock'
         })
 
     @patch("makura_api.get_makura_products")

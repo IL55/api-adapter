@@ -33,7 +33,11 @@ def parse_product_list(xmlstring: str):
         for item in tree.findall('SHOPITEM'):
             sku = get_value(item, "CATALOG_NUMBER", "")
             state = get_value(item, "AVAILABILITY", "")
-            count = int(get_value(item, "STOCK_QUANTITY", "0"))
+            default_count = "100" if state == "in stock" else "0"
+            count = int(get_value(item, "STOCK_QUANTITY", default_count))
+
+            if state == "out of stock":
+                count = 0
 
             result["products"].append({
                 "sku": sku,
