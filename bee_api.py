@@ -120,7 +120,8 @@ def update_stocks(data: dict):
     }
 
   return {
-      "message": None
+      "message": None,
+      "result": response
   }
 
 

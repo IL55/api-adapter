@@ -80,7 +80,7 @@ def update_makura_products():
 
     bee_products = get_products()
     products_ids = {product['SKU']: product['Id'] for product in bee_products}
-    products_stock = {product['SKU']: product['StockCurrent']
+    products_stock = {product['SKU']: int(product['StockCurrent'] if product['StockCurrent'] else 0)
                       for product in bee_products}
 
     for product in makura_products:
@@ -93,7 +93,7 @@ def update_makura_products():
         product_id = products_ids.get(sku)
         if product_id:
             count_in_stock = products_stock.get(sku)
-            if not count_in_stock or count_in_stock < count:
+            if count_in_stock != count:
                 result["updated_products"][sku] = {
                     "bee_product_id": product_id,
                     "sku": sku,
@@ -124,8 +124,10 @@ def update_makura_products():
                 "NewQuantity": result["updated_products"][sku]["count"]
             } for sku in result["updated_products"]
         ]
-        print(update_data)
         update_response = update_stocks(update_data)
+        for bee_result, sku in zip(update_response["result"], result["updated_products"]):
+            result["updated_products"][sku]["ErrorCode"] = bee_result["ErrorCode"]
+
         if update_response["message"]:
             result['message'] = update_response["message"]
 

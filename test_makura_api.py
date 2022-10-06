@@ -63,11 +63,14 @@ class Makura_api(unittest.TestCase):
     @patch("makura_api.get_products")
     @patch("makura_api.update_stocks")
     def test_update_makura_products(self, mk_update_stocks, mk_get_bee_products, mk_get_makura_products):
-        mk_update_stocks.return_value = {"message": None}
+        mk_update_stocks.return_value = {"message": None, "result": [
+            {"ErrorCode": 0},
+            {"ErrorCode": -1}
+        ]}
         mk_get_bee_products.return_value = [
             {'Id': 42364, "SKU": "M01-080-1", "EAN": "0706", "StockCurrent": None},
             {'Id': 45345,  "SKU": "M01-123", "EAN": "56778", "StockCurrent": None},
-            {'Id': 66464,  "SKU": "M01-124", "EAN": "07056", "StockCurrent": 4}
+            {'Id': 66464,  "SKU": "M01-124", "EAN": "07056", "StockCurrent": 14}
         ]
         mk_get_makura_products.return_value = {'products': [
             {
@@ -87,8 +90,8 @@ class Makura_api(unittest.TestCase):
         result = update_makura_products()
         self.assertEqual(result["message"], "")
         self.assertEqual(result["updated_products"], {
-            'M01-123': {'bee_product_id': 45345, 'count': 18, 'sku': 'M01-123', 'count_in_stock': None},
-            'M01-124': {'bee_product_id': 66464, 'count': 12, 'sku': 'M01-124', 'count_in_stock': 4}
+            'M01-123': {'bee_product_id': 45345, 'count': 18, 'sku': 'M01-123', 'count_in_stock': 0, "ErrorCode": -1},
+            'M01-124': {'bee_product_id': 66464, 'count': 12, 'sku': 'M01-124', 'count_in_stock': 14, "ErrorCode": 0}
         })
         self.assertEqual(result["non_updated_products"], {})
         self.assertEqual(result["unknown_products"], {
