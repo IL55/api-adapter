@@ -1,6 +1,7 @@
 import logging
 import sys
-from main import create_ps_order, get_tracking
+from create_order import OrderDestination, create_order
+from main import get_tracking
 from makura_api import update_makura_products
 from ppl_api import get_ppl_tracking
 
@@ -46,9 +47,14 @@ elif action == "update_makura_products":
     response = update_makura_products()
   except:
     response = None
+elif action == "create_makura_order":
+  try:
+    response = create_order(id, OrderDestination.MAKURA)
+  except:
+    response = None
 else:
   try:
-    response = create_ps_order(id)
+    response = create_order(id, OrderDestination.PS)
   except:
     response = None
 

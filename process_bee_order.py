@@ -5,6 +5,41 @@ from config import BeeConfig
 def has_numbers(inputString: str):
   return any(char.isdigit() for char in inputString)
 
+
+def get_bee_products(bee_order_id: str, json_data: dict):
+  order_items = json_data.get('OrderItems', [])
+  products = []
+  for item in order_items:
+    product = item.get('Product', {})
+    product_bee_id = product.get('BillbeeId', '')
+    if (not product_bee_id):
+      logging.error(
+          f'BillbeeId is not defined for {item} for order {bee_order_id} json={json_data}')
+      return None
+
+    product_info = get_product(product_bee_id) or {}
+    product_info_data = product_info.get('Data', {})
+    quantity = int(item.get('Quantity', ''))
+    if (not quantity):
+      logging.error(
+          f'Quantity is not defined for {item} for order {bee_order_id} json={json_data}')
+      return None
+
+    stock_code = product_info_data.get('StockCode', '')
+    if (not stock_code):
+      logging.error(
+          f'StockCode is not defined for {product_info} for order {bee_order_id} json={json_data}')
+      return None
+
+    products.append(
+        {
+            'fulfillmentProductCode': stock_code,
+            'quantity': quantity
+        }
+    )
+
+    return products
+
 def process_order(bee_order_id: str, json: dict):
   """
   Process json data for specific bee order
@@ -97,37 +132,7 @@ def process_order(bee_order_id: str, json: dict):
     logging.error(f'no Tags(courierNumber) for order {bee_order_id} json={json_data}')
     return None
 
-  order_items = json_data.get('OrderItems', [])
-  products = []
-  for item in order_items:
-    product = item.get('Product', {})
-    product_bee_id = product.get('BillbeeId', '')
-    if (not product_bee_id):
-      logging.error(
-          f'BillbeeId is not defined for {item} for order {bee_order_id} json={json_data}')
-      return None
-
-    product_info = get_product(product_bee_id) or {}
-    product_info_data = product_info.get('Data', {})
-    quantity = int(item.get('Quantity', ''))
-    if (not quantity):
-      logging.error(
-          f'Quantity is not defined for {item} for order {bee_order_id} json={json_data}')
-      return None
-
-    stock_code = product_info_data.get('StockCode', '')
-    if (not stock_code):
-      logging.error(
-          f'StockCode is not defined for {product_info} for order {bee_order_id} json={json_data}')
-      return None
-
-    products.append(
-      {
-          'fulfillmentProductCode': stock_code,
-          'quantity': quantity
-      }
-    )
-
+  products = get_bee_products(bee_order_id, json_data)
   if (not products):
     logging.error(
         f'At least one product for order {bee_order_id} should be defined json={json_data}')

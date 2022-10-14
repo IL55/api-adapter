@@ -74,9 +74,16 @@ class PplConfig:
 
 class MakuraConfig:
     base_url = "https://www.makura.cz"
-    get_products_url = base_url + "/export/dostupnost.xml?hash=418cc1804e76013b2fd360972656faa5"
+    get_products_url = base_url + f"/export/dostupnost.xml?hash={secrets.MAKURA_HASH}"
 
     headers = {
         "Content-Type": "application/xml"
     }
 
+    create_order_base_url = "https://demo221126.jzshop.cz"
+    create_order_url = create_order_base_url + "/api/customer/orders"
+
+    create_order_headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + secrets.MAKURA_TOKEN
+    }

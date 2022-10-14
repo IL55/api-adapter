@@ -1,8 +1,9 @@
 import logging
+from unittest import result
 from unittest.mock import patch
 import unittest
 
-from makura_api import parse_product_list, update_makura_products
+from makura_api import get_makura_order_data, parse_product_list, update_makura_products
 
 xml = """<?xml version="1.0" encoding="utf-8"?>
 <SHOP>
@@ -101,6 +102,3 @@ class Makura_api(unittest.TestCase):
             {'Sku': 'M01-124', 'NewQuantity': 12},
             {'Sku': 'M01-123', 'NewQuantity': 18}
         ])
-
-
-
