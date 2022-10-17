@@ -1,7 +1,7 @@
 import logging
 from bee_api import get_products, update_stocks
 from config import MakuraConfig
-from network import post_html_request, post_request
+from network import get_request, post_html_request, post_request
 import xml.etree.ElementTree as ET
 from version import API_VERSION
 
@@ -161,3 +161,23 @@ def add_makura_order(bee_order_id: str, json_data: dict):
     logging.info(f'Add order for Bee order id is {bee_order_id}')
 
     return post_request(MakuraConfig.create_order_url, MakuraConfig.create_order_headers, json_data)
+
+
+def get_makura_tracking_info(bee_order_id: str):
+    """
+    Add order to Makura API
+    Returns json data
+    """
+    logging.info(f'Get makura tracking info order id is {bee_order_id}')
+    """
+    {
+        "id": 1281,
+        "external_id": "1501665316608",
+        "number": "12345674069168",
+        "status_id": 2,
+        "tracking_number": "p7k5m"
+    }
+    """
+
+    url = f'{MakuraConfig.create_order_url}/{bee_order_id}'
+    return get_request(url, MakuraConfig.create_order_headers)

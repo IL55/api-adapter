@@ -34,7 +34,12 @@ except:
 
 if (action == "get_tracking"):
   try:
-    response = get_tracking(id)
+    response = get_tracking(id, OrderDestination.PS)
+  except:
+    response = None
+elif action == "get_makura_tracking":
+  try:
+    response = get_tracking(id, OrderDestination.MAKURA)
   except:
     response = None
 elif action == "get_ppl_tracking":
