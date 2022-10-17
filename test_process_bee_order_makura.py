@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 import unittest
 
-from process_bee_order_makura import process_order_for_makura
+from process_bee_order_makura import get_phone, process_order_for_makura
 
 
 raw_order = {
@@ -255,3 +255,29 @@ class Makura_process_order(unittest.TestCase):
     def test_process_order_for_makura_ok(self):
         result = process_order_for_makura("170081072", raw_order)
         self.assertDictEqual(result, makura_order)
+
+
+class MakuraTestPhone(unittest.TestCase):
+    def test_phones(self):
+        self.assertEqual(
+            get_phone("+420123123123"),
+            "+420123123123"
+        )
+
+        self.assertEqual(
+            get_phone("420/123123123"),
+            "420123123123"
+        )
+
+        self.assertEqual(
+            get_phone(""),
+            "+49111111111"
+        )
+
+        self.assertEqual(
+            get_phone("420+123+123+123"),
+            "420123123123"
+        )
+
+
+

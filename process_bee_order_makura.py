@@ -1,9 +1,22 @@
 import logging
 from config import BeeConfig
 from process_bee_order import get_bee_products
+import re
 
 def has_numbers(inputString: str):
   return any(char.isdigit() for char in inputString)
+
+def get_phone(phone: str):
+
+  if not phone:
+    phone = '+49111111111'
+
+  is_plus_presented = phone[0] == "+"
+
+  phone = re.sub("[^0-9]", "", phone)
+  phone = "+" + phone if is_plus_presented else phone
+
+  return phone
 
 def process_order_for_makura(bee_order_id: str, json: dict):
   """
@@ -83,11 +96,7 @@ def process_order_for_makura(bee_order_id: str, json: dict):
   if (email):
     address['email'] = email
 
-  phone = shipping_address.get('Phone', '')
-  if (phone):
-    address['phone'] = phone
-  else:
-    address['phone'] = '+49111111111'
+  address['phone'] = get_phone(shipping_address.get('Phone', ''))
 
   products = get_bee_products(bee_order_id, json_data)
   products = [{
