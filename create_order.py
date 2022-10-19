@@ -1,7 +1,7 @@
 import logging
 from config import BeeConfig
 from bee_api import get_order, set_order_state
-from makura_api import add_makura_order, get_makura_order_data
+from makura_api import add_makura_order
 from process_bee_order import process_order
 from process_bee_order_makura import process_order_for_makura
 from ps_api import add_order

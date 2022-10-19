@@ -75,8 +75,9 @@ def post_request(url: str, headers: dict, json_data: dict):
     return None
 
   logging.info(f'Response status code {response.status_code}')
-  if (response.status_code != 200):
-    logging.error(f'Cannot post {url} response is {response}')
+  if response.status_code != 200 and response.status_code != 201:
+    logging.error(
+        f'Cannot post {url} response is {response} {response.content}')
     return None
 
   try:

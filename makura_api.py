@@ -134,31 +134,12 @@ def update_makura_products():
     return result
 
 
-def get_makura_order_data(json_data: dict):
-    """ Convert PS data to Makura Data """
-    if not json_data:
-        return
-
-    orderData = json_data['order']
-    productsData = json_data['products']
-    makura_order = {
-        "external_id": orderData["orderNumber"],
-        "carrier_id": int(orderData["courierNumber"], 0),
-        "payment_id": 2,
-        "note": "note",
-        "delivery_address": {
-        }
-
-    }
-
-    return makura_order
-
 def add_makura_order(bee_order_id: str, json_data: dict):
     """
     Add order to Makura API
     Returns json data
     """
-    logging.info(f'Add order for Bee order id is {bee_order_id}')
+    logging.info(f'Add order for Makura, bee order id is {bee_order_id}')
 
     return post_request(MakuraConfig.create_order_url, MakuraConfig.create_order_headers, json_data)
 
