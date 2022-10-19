@@ -80,7 +80,8 @@ class MakuraConfig:
         "Content-Type": "application/xml"
     }
 
-    create_order_base_url = "https://demo221126.jzshop.cz"
+    # "https://demo221126.jzshop.cz"
+    create_order_base_url = base_url
     create_order_url = create_order_base_url + "/api/customer/orders"
 
     create_order_headers = {
