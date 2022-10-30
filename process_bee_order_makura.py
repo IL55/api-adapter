@@ -38,7 +38,7 @@ def process_order_for_makura(bee_order_id: str, json: dict):
         f'OrderNumber and Id for order {bee_order_id} should be defined json={json_data}')
     return None
 
-  order['carrier_id'] = 43 # 73 for production
+  order['carrier_id'] = 73 # 43 for demo
   order['payment_id'] = 2
   order['note'] = ""
 

@@ -220,7 +220,7 @@ products = [
 
 makura_order = {
     "external_id": "1632-170081072",
-    "carrier_id": 43,
+    "carrier_id": 73,
     "payment_id": 2,
     "note": "",
     "delivery_address": {
