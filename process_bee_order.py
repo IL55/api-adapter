@@ -38,7 +38,7 @@ def get_bee_products(bee_order_id: str, json_data: dict):
         }
     )
 
-    return products
+  return products
 
 def process_order(bee_order_id: str, json: dict):
   """

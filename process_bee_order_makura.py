@@ -23,7 +23,7 @@ def process_order_for_makura(bee_order_id: str, json: dict):
   It uses different API vs PS API
   """
 
-  logging.info(f'process_order {bee_order_id} started')
+  logging.info(f'process_order for makura {bee_order_id} started')
 
   json_data = json.get('Data', {})
 
