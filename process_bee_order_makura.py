@@ -98,7 +98,7 @@ def process_order_for_makura(bee_order_id: str, json: dict):
 
   address['phone'] = get_phone(shipping_address.get('Phone', ''))
 
-  products = get_bee_products(bee_order_id, json_data)
+  products = get_bee_products(bee_order_id, json_data, is_sku_used=True)
   products = [{
       "catalog_number": product.get('fulfillmentProductCode', ""),
       "quantity": product.get('quantity', 0),

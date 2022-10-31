@@ -6,7 +6,7 @@ def has_numbers(inputString: str):
   return any(char.isdigit() for char in inputString)
 
 
-def get_bee_products(bee_order_id: str, json_data: dict):
+def get_bee_products(bee_order_id: str, json_data: dict, is_sku_used = False):
   order_items = json_data.get('OrderItems', [])
   products = []
   for item in order_items:
@@ -17,18 +17,22 @@ def get_bee_products(bee_order_id: str, json_data: dict):
           f'BillbeeId is not defined for {item} for order {bee_order_id} json={json_data}')
       return None
 
-    product_info = get_product(product_bee_id) or {}
-    product_info_data = product_info.get('Data', {})
     quantity = int(item.get('Quantity', ''))
     if (not quantity):
       logging.error(
           f'Quantity is not defined for {item} for order {bee_order_id} json={json_data}')
       return None
 
-    stock_code = product_info_data.get('StockCode', '')
-    if (not stock_code):
+    if is_sku_used:
+      stock_code = product.get('SKU', '')
+    else:
+      product_info = get_product(product_bee_id) or {}
+      product_info_data = product_info.get('Data', {})
+      stock_code = product_info_data.get('StockCode', '')
+
+    if not stock_code:
       logging.error(
-          f'StockCode is not defined for {product_info} for order {bee_order_id} json={json_data}')
+          f'StockCode is not defined for {item} for order {bee_order_id} json={json_data}')
       return None
 
     products.append(

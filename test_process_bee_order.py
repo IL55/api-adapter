@@ -98,3 +98,15 @@ class TestProcessBeeOrder(unittest.TestCase):
           {'fulfillmentProductCode': 'ST-1', 'quantity': 1},
           {'fulfillmentProductCode': 'ST-2', 'quantity': 2}
         ])
+
+    @patch("process_bee_order.get_product", MagicMock(
+        return_value={'Data': {}}
+    ))
+    def test_get_bee_products_from_SKU_ok(self):
+        result = get_bee_products("170081072", {
+            'OrderItems': OrderItems
+        }, is_sku_used=True)
+        self.assertEqual(result, [
+            {'fulfillmentProductCode': '4234234', 'quantity': 1},
+            {'fulfillmentProductCode': 'M01-6565554', 'quantity': 2}
+        ])
